@@ -17,6 +17,7 @@ const usersSchema = new Schema({
     default: "starter",
   },
   token: String,
+  avatarURL: String,
 });
 const User = model("user", usersSchema);
 usersSchema.post("save", handleSaveErrors);
