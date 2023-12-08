@@ -12,6 +12,21 @@ const ctrl = require("../../controllers/users");
 
 const auth = require("../../middlewares/auth");
 
+const multer = require("multer");
+
+const tempDir = "C:\\Users\\46845\\Documents\\REST-API\\temp";
+
+const multerConfig = multer.diskStorage({
+    destination: tempDir,
+    filename: (req, file, cb) => {
+        cb(null, file.originalname)
+    }
+});
+
+const upload = multer({
+    storage: multerConfig,
+})
+
 router.post(
   "/register",
   validateBody(usersSchema.addSchema),
@@ -29,5 +44,7 @@ router.post("/logout", auth, ctrlWrapper(ctrl.logout));
 router.get("/current", auth, ctrlWrapper(ctrl.current));
 
 router.patch("/", auth, ctrlWrapper(ctrl.updateSub));
+
+router.patch("/avatars", auth, upload.single("avatar"), ctrlWrapper(ctrl.updateAvatar));
 
 module.exports = router;

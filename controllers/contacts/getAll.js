@@ -9,11 +9,10 @@ const getAll = async (req, res) => {
       );
     } else if (req.query.limit !== undefined) {
       const { page = 1, limit } = req.query;
-      const pageOfResults = result.slice(
-        (page - 1) * limit,
-        (page - 1) * limit + limit
+      result = result.slice(
+          (page - 1) * limit,
+          (page - 1) * limit + limit
       );
-      result = pageOfResults;
     }
   }
   res.json(result);
